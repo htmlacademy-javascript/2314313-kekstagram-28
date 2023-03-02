@@ -1,5 +1,5 @@
 function checkSentence(sentence, symbolsAmount) {
-  if (sentence.length === symbolsAmount) {
+  if (sentence.length <= symbolsAmount) {
     return true;
   }
   return false;
@@ -10,14 +10,16 @@ function checkPolindrom(word) {
     .replaceAll(' ', '')
     .toLowerCase();
   let reverseWord = '';
-  for (let i = 0; i < wordForCheck.length; i++) {
-    reverseWord += wordForCheck.at(wordForCheck.length - i - 1);
+  for (let i = wordForCheck.length - 1; i >= 0; i--) {
+    reverseWord += wordForCheck.at(i);
   }
   return reverseWord === wordForCheck;
 }
 
-function extractNumber(string) {
+function extractNumber(maybeString) {
   let number = '';
+  let string = String(maybeString);
+
   for (let i = 0; i < string.length; i++) {
     if (Number.isInteger(parseInt(string.at(i), 10))) {
       number += string.at(i);
@@ -31,7 +33,7 @@ function extractNumber(string) {
 
 function padStart(originalString, minLength, addSymbols) {
   const difference = minLength - originalString.length;
-  if (originalString.length >= minLength) {
+  if (difference <= 0) {
     return originalString;
   }
   return addSymbols.slice(0, difference % addSymbols.length) + addSymbols.repeat(difference / addSymbols.length) + originalString;
