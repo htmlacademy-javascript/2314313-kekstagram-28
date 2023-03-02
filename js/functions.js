@@ -18,7 +18,7 @@ function checkPolindrom(word) {
 
 function extractNumber(maybeString) {
   let number = '';
-  let string = String(maybeString);
+  const string = String(maybeString);
 
   for (let i = 0; i < string.length; i++) {
     if (Number.isInteger(parseInt(string.at(i), 10))) {
