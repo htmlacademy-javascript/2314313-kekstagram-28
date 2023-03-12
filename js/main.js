@@ -61,13 +61,13 @@ const createComment = () => ({
   id: getUniqueRandomIntegerCommentsId(),
   avatar: `img/avatar-${getUniqueRandomIntegerCommentsAvatar()}.svg`,
   message: createMessage(),
-  name: NAMES[getRandomInteger(0, NAMES.length - 1)],
+  name: getRandomArrayElement(NAMES),
 });
 
 const createForm = () => ({
   id: getUniqueRandomIntegerIdUrl(),
   url: `photos/${getUniqueRandomIntegerIdUrl()}.jpg`,
-  description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
+  description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
   comments: Array.from({ length: getRandomInteger(0, COMMENT_COUNT) }, () => createComment()),
 });
