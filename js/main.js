@@ -1,3 +1,3 @@
-import { createAllForm } from "./data.js";
+import { createAllForm } from './data.js';
 
-console.log(createAllForm());
+createAllForm();
