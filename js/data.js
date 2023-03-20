@@ -27,7 +27,8 @@ const DESCRIPTION = [
   'Ем',
 ];
 
-const getUniqueRandomIntegerIdUrl = getUniqueRandomInteger(1, PICTURE_COUNT);
+const getUniqueRandomIntegerId = getUniqueRandomInteger(1, PICTURE_COUNT);
+const getUniqueRandomIntegerUrl = getUniqueRandomInteger(1, PICTURE_COUNT);
 const getUniqueRandomIntegerCommentsId = getUniqueRandomInteger(1, Math.pow(2, 53));
 const getUniqueRandomIntegerCommentsAvatar = getUniqueRandomInteger(1, AVATAR_COUNT);
 
@@ -43,8 +44,8 @@ const createComment = () => ({
 });
 
 const createForm = () => ({
-  id: getUniqueRandomIntegerIdUrl(),
-  url: `photos/${getUniqueRandomIntegerIdUrl()}.jpg`,
+  id: getUniqueRandomIntegerId(),
+  url: `photos/${getUniqueRandomIntegerUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
   comments: Array.from({ length: getRandomInteger(0, COMMENT_COUNT) }, () => createComment()),
