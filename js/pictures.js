@@ -1,14 +1,12 @@
-import {createAllForm} from './data.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictureContainer = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
-const pictureList = createAllForm();
-
-const createPicture = function(){
-  pictureList.forEach(({url, description, likes, comments}) => {
+const createPicture = (pictureList) => {
+  pictureList.forEach(({id, url, description, likes, comments}) => {
     const pictureThumbnail = pictureTemplate.cloneNode(true);
+    pictureThumbnail.dataset.thumbnailId = id;
 
     pictureThumbnail.querySelector('.picture__img').src = url;
     pictureThumbnail.querySelector('.picture__img').alt = description;
@@ -20,8 +18,8 @@ const createPicture = function(){
   });
 };
 
-const addPicture = function(){
-  createPicture();
+const addPicture = (pictureList) => {
+  createPicture(pictureList);
   pictureContainer.append(fragment);
 };
 export { addPicture };
