@@ -30,15 +30,13 @@ const DESCRIPTION = [
 const getUniqueRandomIntegerId = getUniqueRandomInteger(1, PICTURE_COUNT);
 const getUniqueRandomIntegerUrl = getUniqueRandomInteger(1, PICTURE_COUNT);
 const getUniqueRandomIntegerCommentsId = getUniqueRandomInteger(1, Math.pow(2, 53));
-const getUniqueRandomIntegerCommentsAvatar = getUniqueRandomInteger(1, AVATAR_COUNT);
-
 
 const createMessage = () =>
   Array.from({ length: getRandomInteger(1, 2) }, () => getRandomArrayElement(MESSAGE)).join(' ');
 
 const createComment = () => ({
   id: getUniqueRandomIntegerCommentsId(),
-  avatar: `img/avatar-${getUniqueRandomIntegerCommentsAvatar()}.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
   message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
