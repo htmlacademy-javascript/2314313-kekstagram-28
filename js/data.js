@@ -4,6 +4,7 @@ const AVATAR_COUNT = 6;
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 10;
+const COMMENTS_PER_PORTION = 5;
 const MESSAGE = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -51,4 +52,4 @@ const createForm = () => ({
 
 const createAllForm = () => Array.from({ length: PICTURE_COUNT }, () => createForm());
 
-export { createAllForm };
+export { createAllForm , COMMENTS_PER_PORTION };
