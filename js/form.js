@@ -1,6 +1,8 @@
 import { isEscapeDown } from './util.js';
 import { onScaleBigClick, onscaleSmallClick, resetScale } from './scale.js';
 import { resetSlider } from './effect.js';
+import { sendData } from './api.js';
+
 
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const HASHTAG_COUNT = 5;
@@ -14,6 +16,9 @@ const scaleBig = document.querySelector('.scale__control--bigger');
 const cancelButton = document.querySelector('#upload-cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -61,6 +66,44 @@ function closeModal() {
   document.removeEventListener('keydown', onDocumentKeyDown);
 }
 
+const closeElement = (element) =>{
+  element.classList.add('hidden');
+};
+
+const closeModalSuccess = (closeCallback) => {
+  closeCallback();
+  const successTemplateElement = successTemplate.cloneNode(true);
+  const closerButton = successTemplateElement.querySelector('.success__button');
+  closerButton.addEventListener('click', ()=>{
+    closeElement(successTemplateElement);
+  });
+  document.addEventListener('keydown', (evt) => {
+    if(isEscapeDown(evt)){
+      closeElement(successTemplateElement);
+    }
+  });
+  body.append(successTemplateElement);
+};
+
+const closeModalError = (closeCallback) => {
+  closeCallback();
+  const errorTemplateElement = errorTemplate.cloneNode(true);
+  const closerButton = errorTemplateElement.querySelector('.error__button');
+  closerButton.addEventListener('click', ()=>{
+    closeElement(errorTemplateElement);
+  });
+  document.addEventListener('keydown', (evt) => {
+    if(isEscapeDown(evt)){
+      closeElement(errorTemplateElement);
+    }
+  });
+  body.append(errorTemplateElement);
+};
+
+const closeModalOnSubmit = () => closeModalSuccess(closeModal);
+
+const closeModalOnError = () => closeModalError(closeModal);
+
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -72,10 +115,21 @@ const showModal = () => {
   resetScale();
 };
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+fileField.addEventListener('change', showModal);
+const setUserFormSubmit = (onSuccess, onError) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if(isValid){
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(()=>{
+          onError();
+        });
+    }
+  });
 };
 
-fileField.addEventListener('change', showModal);
-form.addEventListener('submit', onFormSubmit);
+
+export { setUserFormSubmit, showModal, closeModalOnSubmit, closeModalOnError };
