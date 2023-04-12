@@ -8,6 +8,9 @@ const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 10;
 const COMMENTS_PER_PORTION = 5;
+const MINSCALE = 25;
+const MAXSCALE = 100;
+const STEP = 25;
 const MESSAGE = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -55,4 +58,5 @@ const createForm = () => ({
 
 const createAllForm = () => Array.from({ length: PICTURE_COUNT }, () => createForm());
 
-export { createAllForm , COMMENTS_PER_PORTION , MAXSCALE , MINSCALE , STEP};
+export { createAllForm , COMMENTS_PER_PORTION, MAXSCALE, MINSCALE, STEP };
+
