@@ -1,13 +1,12 @@
 import { createAllForm } from './data.js';
 import { showFullPicture } from './big-picture.js';
-<<<<<<< Updated upstream
-=======
 import { setUserFormSubmit, closeModalOnSubmit, closeModalOnError } from './form.js';
 import { addPicture } from './pictures.js';
 import { getData } from './api.js';
 import './form.js';
 import './effect.js';
->>>>>>> Stashed changes
+import './form.js';
+import './effect.js';
 
 const pictureList = createAllForm();
 
