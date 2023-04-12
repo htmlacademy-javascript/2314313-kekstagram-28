@@ -1,5 +1,7 @@
 import { isEscapeDown } from './util.js';
 import { onScaleBigClick, onscaleSmallClick, resetScale } from './scale.js';
+import { resetSlider } from './effect.js';
+
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -66,6 +68,7 @@ const showModal = () => {
   scaleSmall.addEventListener('click', onscaleSmallClick);
   cancelButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeyDown);
+  resetSlider();
   resetScale();
 };
 
@@ -76,4 +79,3 @@ const onFormSubmit = (evt) => {
 
 fileField.addEventListener('change', showModal);
 form.addEventListener('submit', onFormSubmit);
-
