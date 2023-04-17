@@ -3,6 +3,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const pictureContainer = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
+
 const createPicture = (pictureList) => {
   pictureList.forEach(({id, url, description, likes, comments}) => {
     const pictureThumbnail = pictureTemplate.cloneNode(true);
@@ -22,4 +23,11 @@ const addPicture = (pictureList) => {
   createPicture(pictureList);
   pictureContainer.append(fragment);
 };
-export { addPicture };
+
+const removePictures = () => {
+  document.querySelectorAll('.picture').forEach((picture) => {
+    picture.remove();
+  });
+};
+
+export { addPicture, removePictures };

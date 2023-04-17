@@ -21,22 +21,22 @@ const renderComments = ({avatar, name, message}) => {
   return comment ;
 };
 
-const showComments = (comments) => {
+const showComments = (comment) => {
   commentsShown += COMMENTS_PER_PORTION;
-  if(commentsShown >= comments.length){
+  if(commentsShown >= comment.length){
     commentsLoader.classList.add('hidden');
-    commentsShown = comments.length;
+    commentsShown = comment.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
   const commentFragment = document.createDocumentFragment();
 
   for(let i = 0; i < commentsShown; i++){
-    commentFragment.append(renderComments(comments[i]));
+    commentFragment.append(renderComments(comment[i]));
   }
-  commentContainer.innerHTML = '';
+  commentContainer.textContent = '';
   commentContainer.append(commentFragment);
-  commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+  commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comment.length}</span> комментариев`;
 };
 
 const renderPictureDetails = ({ url, likes, description, comments}) => {
@@ -47,11 +47,11 @@ const renderPictureDetails = ({ url, likes, description, comments}) => {
   bigPicture.querySelector('.social__caption').textContent = description;
   const showCommentsWithData = () => showComments(comments);
   showCommentsWithData();
-  commentsLoader.addEventListener('click', showCommentsWithData);
+  commentsLoader.addEventListener('click', () => showComments(comments));
 };
 
 const onDocumentKeyDown = (evt) => {
-  if(isEscapeDown){
+  if(isEscapeDown(evt)){
     evt.preventDefault();
     closeBigPicture();
   }
@@ -74,6 +74,9 @@ const showBigPicture = (data) => {
 const showFullPicture = (pictureList) =>{
   const checkIdOfPicture = function(evt) {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
+    if(!thumbnail) {
+      return;
+    }
     const picture = pictureList.find(
       (item) => item.id === +thumbnail.dataset.thumbnailId
     );

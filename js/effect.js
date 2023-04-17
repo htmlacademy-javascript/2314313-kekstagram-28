@@ -49,7 +49,7 @@ const effectsArray = [
   },
 ];
 
-const picture = document.querySelector('.img-upload__preview');
+const picture = document.querySelector('.img-upload__preview img');
 const effects = document.querySelectorAll('.effects__radio');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
@@ -57,6 +57,7 @@ const sliderContainerElement = document.querySelector('.img-upload__effect-level
 const DEFAULT_ELEMENT = effectsArray[0];
 let choozenEffect = DEFAULT_ELEMENT;
 picture.classList.add(`effects__preview--${DEFAULT_ELEMENT.name}`);
+
 
 const isDefault = () => choozenEffect === DEFAULT_ELEMENT;
 
@@ -93,11 +94,14 @@ const onSliderUpdate = () => {
   }
 };
 
+const deletePreviousFilter = () => {
+  const previousFilter = Object.values(picture.classList).filter((item) => !(item === 'img-upload__preview'));
+  picture.classList.remove(previousFilter);
+};
+
 effects.forEach((effect) => {
   effect.addEventListener('click', (evt) => {
-    const previousFilter = Object.values(picture.classList).filter((item) => !(item === 'img-upload__preview'));
-    picture.classList.remove(previousFilter);
-
+    deletePreviousFilter();
     picture.classList.add(`effects__preview--${evt.target.value}`);
     choozenEffect = effectsArray.find((effectArray) => effectArray.name === evt.target.value);
     updateSlider();
@@ -122,7 +126,15 @@ const resetSlider = () => {
   updateSlider();
 };
 
+const resetFilter = () => {
+  deletePreviousFilter();
+  picture.classList.add(`effects__preview--${effectsArray[0].style}`);
+  effects.forEach((effect) =>
+    effect.checked === false);
+  effects[0].checked = true ;
+};
+
 
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
-export { resetSlider };
+export { resetSlider , resetFilter };

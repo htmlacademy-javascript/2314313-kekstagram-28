@@ -9,7 +9,7 @@ const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 10;
 const COMMENTS_PER_PORTION = 5;
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -26,7 +26,7 @@ const NAMES = [
   'Max',
 ];
 
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'Это я в Дубае',
   'В коридоре',
   'Ем',
@@ -37,7 +37,7 @@ const getUniqueRandomIntegerUrl = getUniqueRandomInteger(1, PICTURE_COUNT);
 const getUniqueRandomIntegerCommentsId = getUniqueRandomInteger(1, Math.pow(2, 53));
 
 const createMessage = () =>
-  Array.from({ length: getRandomInteger(1, 2) }, () => getRandomArrayElement(MESSAGE)).join(' ');
+  Array.from({ length: getRandomInteger(1, 2) }, () => getRandomArrayElement(MESSAGES)).join(' ');
 
 const createComment = () => ({
   id: getUniqueRandomIntegerCommentsId(),
@@ -49,7 +49,7 @@ const createComment = () => ({
 const createForm = () => ({
   id: getUniqueRandomIntegerId(),
   url: `photos/${getUniqueRandomIntegerUrl()}.jpg`,
-  description: getRandomArrayElement(DESCRIPTION),
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
   comments: Array.from({ length: getRandomInteger(0, COMMENT_COUNT) }, () => createComment()),
 });
