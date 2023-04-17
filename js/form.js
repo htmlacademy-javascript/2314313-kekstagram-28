@@ -1,6 +1,6 @@
 import { isEscapeDown } from './util.js';
 import { onScaleBigClick, onscaleSmallClick, resetScale } from './scale.js';
-import { resetSlider } from './effect.js';
+import { resetSlider , resetFilter } from './effect.js';
 import { sendData } from './api.js';
 
 
@@ -52,19 +52,18 @@ const isTextFieldFocused = () =>
   document.activeElement === commentField ||
   document.activeElement === hashtagField;
 
+const closeModal = () => {
+  overlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+};
 
 const onDocumentKeyDown = (evt) => {
   if(isEscapeDown(evt) && !isTextFieldFocused()){
     evt.preventDefault();
     closeModal();
+    document.removeEventListener('keydown', onDocumentKeyDown);
   }
 };
-
-function closeModal() {
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeyDown);
-}
 
 const closeElement = (element) =>{
   element.classList.add('hidden');
@@ -104,6 +103,14 @@ const closeModalOnSubmit = () => closeModalSuccess(closeModal);
 
 const closeModalOnError = () => closeModalError(closeModal);
 
+const resetAllInModal = () => {
+  resetScale();
+  resetSlider();
+  resetFilter();
+  hashtagField.value = '';
+  commentField.value = '';
+};
+
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -111,8 +118,7 @@ const showModal = () => {
   scaleSmall.addEventListener('click', onscaleSmallClick);
   cancelButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeyDown);
-  resetSlider();
-  resetScale();
+  resetAllInModal();
 };
 
 fileField.addEventListener('change', showModal);
